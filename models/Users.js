@@ -1,20 +1,36 @@
-// Define Mongoose
-const mongoose = require('mongoose');
+const { Schema, model } = require("mongoose");
 
-// Create a new instance of the Mongoose schema to define shape of each document
-const userSchema = new mongoose.Schema({
-  // Add individual properties and their types
-  // Setting required to true will disallow null values
-  username: { type: String, required: true, unique: true, trim: true },
-  email: { type: String, required: true, unique: true }, // Must match a valid email address (look into Mongoose's matching validation)
-  thoughts: {}, // Array of _id values referencing the Thought model
-  friends: {}, // Array of _id values referencing the User model (self-reference)
+const thoughtSchema = require("./Thought");
+
+const userSchema = new Schema(
+  {
+    username: { type: String, required: true, unique: true, trim: true },
+    email: {
+      type: String,
+      unique: true,
+      validate: {
+        validator: function (v) {
+          return /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/.test(v);
+        },
+        message: (props) => `${props.value} is not a valid email address!`,
+      },
+      required: [true, "User email address is required"],
+    }, // Must match a valid email address (look into Mongoose's matching validation)
+    thoughts: [thoughtSchema],
+    friends: [userSchema],
+  },
+  {
+    toJSON: {
+      virtuals: true,
+    },
+    id: false,
+  }
+);
+
+userSchema.virtual("friendCount").get(function () {
+  return this.friends.length;
 });
 
-const User = mongoose.model("User", userSchema);
+const User = model("user", userSchema);
 
-// Error handler function to be called when an error occurs when trying to save a document
-const handleError = (err) => console.error(err);
-
-//  UserSchema Settings
-// Create a virtual called friendCount that retrieves the length of the user's friends array field on query.
+module.exports = User;
