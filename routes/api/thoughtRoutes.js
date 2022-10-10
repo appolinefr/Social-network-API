@@ -1,3 +1,7 @@
+
+
+
+
 // /api/thoughts
 
 // GET to get all thoughts
