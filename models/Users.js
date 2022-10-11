@@ -8,16 +8,19 @@ const userSchema = new Schema(
     email: {
       type: String,
       unique: true,
+      lowercase: true,
       validate: {
-        validator: function (v) {
+        validator: v => {
           return /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/.test(v);
         },
-        message: (props) => `${props.value} is not a valid email address!`,
+        message: props => `${props.value} is not a valid email address!`,
       },
       required: [true, "User email address is required"],
-    }, // Must match a valid email address (look into Mongoose's matching validation)
-    thoughts: [thoughtSchema],
-    friends: [userSchema],
+    }, 
+    thoughts: [{type: Schema.Types.ObjectId,
+    ref: "thought"}],
+    friends: [{type: Schema.Types.ObjectId,
+    ref: "user"}],
   },
   {
     toJSON: {
