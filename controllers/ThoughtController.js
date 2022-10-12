@@ -8,7 +8,7 @@ module.exports = {
   },
 
   getSingleThought(req, res) {
-    Thought.findOne({ _id: req.params.toughtId })
+    Thought.findOne({ _id: req.params.thoughtId })
       .select("-__v")
       .then(async (thought) =>
         !thought
@@ -29,14 +29,14 @@ module.exports = {
 
   updateThought(req, res) {
     Thought.findOneAndUpdate(
-      { tought: req.params.toughtId },
-      { $pull: { tought: req.params.toughtId } },
-      { new: true }
-    ).then((tought) =>
-      !tought
-        ? res.status(404).json({ message: "No tought with that ID" })
+      { thought: req.params.thoughtId },
+      { $set: req.body },
+      { runValidators: true, new: true }
+    ).then((thought) =>
+      !thought
+        ? res.status(404).json({ message: "No thought with that ID" })
         : res
-            .json({ message: "Tought updated!" })
+            .json({ message: "Thought updated!" })
             .catch((err) => res.status(500).json(err))
     );
   },
@@ -47,6 +47,34 @@ module.exports = {
         !thought
           ? res.status(404).json({ message: "No thought with that ID" })
           : res.json({ message: "thought deleted!" })
+      )
+      .catch((err) => res.status(500).json(err));
+  },
+
+  createReaction(req, res) {
+    Thought.findOneAndUpdate(
+      { _id: req.params.thoughtId },
+      { $addToSet: { reactions: req.body } },
+      { runValidators: true, new: true }
+    ).then((thought) =>
+      !thought
+        ? res.status(404).json({ message: "No thought with that ID" })
+        : res
+            .json({ message: "Thought updated!" })
+            .catch((err) => res.status(500).json(err))
+    );
+  },
+
+  deleteReaction(req, res) {
+    Thought.findOneAndUpdate(
+      { _id: req.params.thoughtId },
+      { $pull: { reactions: { reactionId: req.params.reactionId } } },
+      { runValidators: true, new: true }
+    )
+      .then((thought) =>
+        !thought
+          ? res.status(404).json({ message: errorMessage })
+          : res.json(thought)
       )
       .catch((err) => res.status(500).json(err));
   },
