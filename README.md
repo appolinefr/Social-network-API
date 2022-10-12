@@ -28,7 +28,8 @@ This project was a great way to put in practice eveyrything I have learned about
 
 ## Challenges
 
-Populating the subdocuments and having them show up on the GET routes was challenging. 
+Populating the subdocuments and having them show up on the GET routes was challenging. I was able to define those relationships in the controllers and the user's arrays are now showing each of their thoughts
+
 ## Installation 💾
 
 Run the following command:
@@ -38,4 +39,4 @@ Run the following command:
 
 ### Link to walkthrough video
 
-[Link to walkthrough video]()
+[Link to walkthrough video](https://drive.google.com/file/d/1K6cHQVoatef8ngo9o-vhxwTx_TQR4_2b/view)
