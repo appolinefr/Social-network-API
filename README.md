@@ -24,8 +24,11 @@ Here are the main requirements of the project:
 
 ## What I have learned 
 
+This project was a great way to put in practice eveyrything I have learned about MongoDB and Mongoose. I now feel confortable with builiding a schema, setting up values, validators... This project also allowed me to practice making complex queries and complex object updates.
+
 ## Challenges
 
+Populating the subdocuments and having them show up on the GET routes was challenging. 
 ## Installation 💾
 
 Run the following command:
