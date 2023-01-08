@@ -10,8 +10,7 @@
 - [Link to walkthrough video](#link-to-walkthrough-video)
 
 ## Description of Project
-
-This challenge was to build an API for a social network web application where users can share their thoughts, react to friends’ thoughts, and create a friend list. It uses Express.js for routing, a MongoDB database, and the Mongoose ODM.
+This is an API for a social network web application where users can share their thoughts, react to friends’ thoughts, and create a friend list. It uses Express.js for routing, a MongoDB database, and the Mongoose ODM.
 
 ## Project Requirements
 
